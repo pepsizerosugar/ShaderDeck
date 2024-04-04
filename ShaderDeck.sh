@@ -119,7 +119,7 @@ else
     )
 fi
 
-while opt=$(zenity --width=500 --height=250 --title="Steam Deck Shader Cache Management" --list --column="Options" "${options[@]}"); do
+while opt=$(zenity --width=500 --height=250 --title="ShaderDeck" --list --column="Options" "${options[@]}"); do
     case "$opt" in
         "${options[0]}" )
             removeShaderCache "$HOME/.steam/steam/steamapps/shadercache" "internal"
