@@ -87,33 +87,33 @@ moveShaderCache() {
 }
 
 
-sdCard=""
+SDCARD=""
 if [ -b "/dev/mmcblk0p1" ]; then
-    sdCard=$(findmnt -n --raw --evaluate --output=target -S /dev/mmcblk0p1 || echo "")
-    if [ -z "$sdCard" ]; then
+    SDCARD=$(findmnt -n --raw --evaluate --output=target -S /dev/mmcblk0p1 || echo "")
+    if [ -z "$SDCARD" ]; then
         show_and_log_message error "SD Card not mounted" "SD Card is not mounted."
         exit 1
     fi
-    sdshadersize=$(getShaderSize "${sdCard}/steamapps/shadercache")
-    if [ "$sdshadersize" = "Path not found: ${sdCard}/steamapps/shadercache" ]; then
+    SDCARD_SHADER_SIZE=$(getShaderSize "${SDCARD}/steamapps/shadercache")
+    if [ "$SDCARD_SHADER_SIZE" = "Path not found: ${SDCARD}/steamapps/shadercache" ]; then
         show_and_log_message error "Shader cache does not exist" "Shader cache does not exist on SD card."
         exit 1
     fi
 fi
 
-internalshadersize=$(getShaderSize "$HOME/.steam/steam/steamapps/shadercache")
+INTERNAL_SHADER_SIZE=$(getShaderSize "$HOME/.steam/steam/steamapps/shadercache")
 
 log_message "Presenting options to the user"
-if [ -n "$sdCard" ]; then
+if [ -n "$SDCARD" ]; then
     options=(
-        "Remove ${internalshadersize:=0B} of shader cache from internal storage."
-        "Remove ${sdshadersize:=0B} of shader cache from SD card."
-        "Move ${internalshadersize} of shader cache from internal storage to SD card."
+        "Remove ${INTERNAL_SHADER_SIZE:=0B} of shader cache from internal storage."
+        "Remove ${SDCARD_SHADER_SIZE:=0B} of shader cache from SD card."
+        "Move ${INTERNAL_SHADER_SIZE:=0B} of shader cache from internal storage to SD card."
         "Quit"
     )
 else
     options=(
-        "Remove ${internalshadersize:=0B} of shader cache from internal storage."
+        "Remove ${INTERNAL_SHADER_SIZE:=0B} of shader cache from internal storage."
         "SD Card Not Found"
         "Quit"
     )
@@ -125,15 +125,15 @@ while opt=$(zenity --width=500 --height=250 --title="Steam Deck Shader Cache Man
             removeShaderCache "$HOME/.steam/steam/steamapps/shadercache" "internal"
             ;;
         "${options[1]}" )
-            if [ -n "$sdCard" ]; then
-                removeShaderCache "${sdCard}/steamapps/shadercache" "SD card"
+            if [ -n "$SDCARD" ]; then
+                removeShaderCache "${SDCARD}/steamapps/shadercache" "SD card"
             else
                 show_and_log_message error "SD Card not found" "SD Card not found for removing shader cache."
             fi
             ;;
         "${options[2]}" )
-            if [ -n "$sdCard" ]; then
-                moveShaderCache "$HOME/.steam/steam/steamapps/shadercache" "${sdCard}/steamapps"
+            if [ -n "$SDCARD" ]; then
+                moveShaderCache "$HOME/.steam/steam/steamapps/shadercache" "${SDCARD}/steamapps"
             else
                 show_and_log_message error "SD Card not found" "SD Card not found for moving shader cache."
             fi
