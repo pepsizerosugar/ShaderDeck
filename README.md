@@ -1,6 +1,6 @@
 # ShaderDeck
 
-![Version](https://img.shields.io/badge/Version-1.0.0-green) ![Update](https://img.shields.io/badge/Update-2024.04.05-blue) ![Compatibility](https://img.shields.io/badge/Compatible-Steam_Deck-orange)
+![Version](https://img.shields.io/badge/Version-1.0.1-green) ![Update](https://img.shields.io/badge/Update-2024.04.05-blue) ![Compatibility](https://img.shields.io/badge/Compatible-Steam_Deck-orange) ![GitHub all releases](https://img.shields.io/github/downloads/pepsizerosugar/ShaderDeck/total?color=purple)
 
 * ShaderDeck manage the shader cache on your Steam Deck, enhancing your gaming experience by optimizing storage space and performance.
 
@@ -11,9 +11,11 @@
 
 ## 0. Change Log
 
-### 1.0.0 (2024.04.05)
+### 1.0.1 (2024.04.05)
 
-- Initial release.
+- [pepsi-007] fix: calculate size when return menu
+- [pepsi-008] fix: when have no sdcard, getShaderSizes call order
+- [pepsi-009] fix: switch case order
 
 ## 1. Getting Started
 
