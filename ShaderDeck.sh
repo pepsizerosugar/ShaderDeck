@@ -124,6 +124,9 @@ fi
 while opt=$(zenity --width=500 --height=250 --title="ShaderDeck" --list --column="Options" "${options[@]}"); do
   getShaderSizes
     case "$opt" in
+        "Quit" )
+            break
+            ;;
         "${options[0]}" )
             removeShaderCache "$HOME/.steam/steam/steamapps/shadercache" "internal"
             ;;
@@ -140,12 +143,6 @@ while opt=$(zenity --width=500 --height=250 --title="ShaderDeck" --list --column
             else
                 show_and_log_message error "SD Card not found" "SD Card not found for moving shader cache."
             fi
-            ;;
-        "SD Card Not Found" )
-            show_and_log_message error "SD Card not found" "SD Card not found. Please insert an SD card to proceed."
-            ;;
-        "Quit" )
-            break
             ;;
         * )
             show_and_log_message error "Invalid option" "Invalid option selected."
