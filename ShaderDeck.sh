@@ -105,6 +105,7 @@ moveShaderCache() {
 }
 
 log_message "Presenting options to the user"
+getShaderSizes
 if [ -n "$SDCARD" ]; then
     options=(
         "Remove ${INTERNAL_SHADER_SIZE:=0B} of shader cache from internal storage."
@@ -139,6 +140,9 @@ while opt=$(zenity --width=500 --height=250 --title="ShaderDeck" --list --column
             else
                 show_and_log_message error "SD Card not found" "SD Card not found for moving shader cache."
             fi
+            ;;
+        "SD Card Not Found" )
+            show_and_log_message error "SD Card not found" "SD Card not found. Please insert an SD card to proceed."
             ;;
         "Quit" )
             break
