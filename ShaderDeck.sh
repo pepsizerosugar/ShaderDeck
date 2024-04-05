@@ -2,6 +2,9 @@
 
 set -o pipefail
 
+SDCARD=""
+SDCARD_SHADER_SIZE=""
+INTERNAL_SHADER_SIZE=""
 LOG_FILE="$HOME/shader_cache_management.log"
 
 log_message() {
@@ -29,6 +32,22 @@ getShaderSize() {
     echo "$size"
 }
 
+getShaderSizes() {
+    if [ -b "/dev/mmcblk0p1" ]; then
+        SDCARD=$(findmnt -n --raw --evaluate --output=target -S /dev/mmcblk0p1 || echo "")
+        if [ -z "$SDCARD" ]; then
+            show_and_log_message error "SD Card not mounted" "SD Card is not mounted."
+            exit 1
+        fi
+        SDCARD_SHADER_SIZE=$(getShaderSize "${SDCARD}/steamapps/shadercache")
+        if [ "$SDCARD_SHADER_SIZE" = "Path not found: ${SDCARD}/steamapps/shadercache" ]; then
+            show_and_log_message error "Shader cache does not exist" "Shader cache does not exist on SD card."
+            exit 1
+        fi
+    fi
+    INTERNAL_SHADER_SIZE=$(getShaderSize "$HOME/.steam/steam/steamapps/shadercache")
+}
+
 removeShaderCache() {
     local path="$1"
     local storageType="$2"
@@ -54,7 +73,6 @@ removeShaderCache() {
         show_and_log_message info "Success" "Shader cache successfully removed from $storageType storage."
     fi
 }
-
 
 moveShaderCache() {
     local src="$1"
@@ -86,23 +104,6 @@ moveShaderCache() {
     fi
 }
 
-
-SDCARD=""
-if [ -b "/dev/mmcblk0p1" ]; then
-    SDCARD=$(findmnt -n --raw --evaluate --output=target -S /dev/mmcblk0p1 || echo "")
-    if [ -z "$SDCARD" ]; then
-        show_and_log_message error "SD Card not mounted" "SD Card is not mounted."
-        exit 1
-    fi
-    SDCARD_SHADER_SIZE=$(getShaderSize "${SDCARD}/steamapps/shadercache")
-    if [ "$SDCARD_SHADER_SIZE" = "Path not found: ${SDCARD}/steamapps/shadercache" ]; then
-        show_and_log_message error "Shader cache does not exist" "Shader cache does not exist on SD card."
-        exit 1
-    fi
-fi
-
-INTERNAL_SHADER_SIZE=$(getShaderSize "$HOME/.steam/steam/steamapps/shadercache")
-
 log_message "Presenting options to the user"
 if [ -n "$SDCARD" ]; then
     options=(
@@ -120,6 +121,7 @@ else
 fi
 
 while opt=$(zenity --width=500 --height=250 --title="ShaderDeck" --list --column="Options" "${options[@]}"); do
+  getShaderSizes
     case "$opt" in
         "${options[0]}" )
             removeShaderCache "$HOME/.steam/steam/steamapps/shadercache" "internal"
