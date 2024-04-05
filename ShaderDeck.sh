@@ -9,9 +9,9 @@ log_message() {
 }
 
 show_and_log_message() {
-    local type="$1"
-    local title="$2"
-    local message="$3"
+    local type=${1:-'info'}
+    local title=${1:-'ShaderDeck'}
+    local message=${1:-'ShaderDeck'}
 
     log_message "$title - $message"
     zenity --"$type" --title="$title" --text="$message" --width=300
