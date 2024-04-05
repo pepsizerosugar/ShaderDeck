@@ -57,7 +57,7 @@ get_shader_sizes() {
     internal_shader_size=$(get_shader_size "$HOME/.steam/steam/steamapps/shadercache")
 }
 
-remote_shader_cache() {
+remove_shader_cache() {
     local path="$1"
     local storage_type="$2"
     if [ ! -d "$path" ]; then
@@ -142,11 +142,11 @@ while opt=$(zenity --width=500 --height=300 --title="ShaderDeck" --list --column
             break
             ;;
         "${options[0]}" )
-            remote_shader_cache "$HOME/.steam/steam/steamapps/shadercache" "internal"
+            remove_shader_cache "$HOME/.steam/steam/steamapps/shadercache" "internal"
             ;;
         "${options[1]}" )
             if [ -n "$sdcard" ]; then
-                remote_shader_cache "${sdcard}/steamapps/shadercache" "SD card"
+                remove_shader_cache "${sdcard}/steamapps/shadercache" "SD card"
             else
                 show_and_log_message error "SD Card not found" "SD Card not found for removing shader cache."
             fi
