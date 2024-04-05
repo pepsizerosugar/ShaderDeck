@@ -136,9 +136,9 @@ else
 fi
 
 while opt=$(zenity --width=500 --height=300 --title="ShaderDeck" --list --column="Options" "${options[@]}"); do
-  get_shader_sizes
     case "$opt" in
         "Quit" )
+            log_message "Exiting"
             break
             ;;
         "${options[0]}" )
@@ -162,4 +162,5 @@ while opt=$(zenity --width=500 --height=300 --title="ShaderDeck" --list --column
             show_and_log_message error "Invalid option" "Invalid option selected."
             ;;
     esac
+    get_shader_sizes
 done
