@@ -31,7 +31,7 @@
 
 1. Open the file manager and navigate to the download folder.
 2. Do the following steps in the file manager.
-    1. Right-click(R2) on the downloaded file(witch is `ShaderDeck.sh`) and select `Properties`.
+    1. Right-click(L2) on the downloaded file(witch is `ShaderDeck.sh`) and select `Properties`.
     2. Go to the `Permissions` tab and check the `Is executable` option.
     3. And click the 'OK' button at the bottom of the window.
 3. Double-click(Touch or R2) on the file(witch is `ShaderDeck.sh`) to run it.
@@ -41,7 +41,7 @@
 
 1. Open the file manager and navigate to the download folder.
 2. Do the following steps in the file manager.
-    1. Right-click(R2) on the downloaded file(witch is `ShaderDeck.sh`) and select `Properties`.
+    1. Right-click(L2) on the downloaded file(witch is `ShaderDeck.sh`) and select `Properties`.
     2. Select `Add to Steam` option.
 3. Return to the gaming mode.
 4. Press STEAM button on the left side of the device.
